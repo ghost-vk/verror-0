@@ -1,9 +1,6 @@
 import { format } from 'node:util';
-
-function isError(e: unknown): e is Error {
-  if (!e) return false;
-  return e instanceof Error;
-}
+import { isError } from './is-error.js';
+import { Options } from './types.js';
 
 type Args = {
   // Первый - ошибка / строка / объект.
@@ -12,7 +9,7 @@ type Args = {
   argv: unknown[];
 };
 
-export function parseArgs(args: Args) {
+export function parseArgs(args: Args): { options: Options; shortmessage: string } {
   let argv: unknown[];
 
   if (typeof args !== 'object' || args === null || !('argv' in args)) {
@@ -25,9 +22,7 @@ export function parseArgs(args: Args) {
 
   argv = args.argv;
 
-  const options: {
-    cause?: unknown;
-  } = {};
+  const options: Options = {};
   let sprintfArgs: unknown[] = [];
   // Определим какая форма вызова используется.
   if (argv.length === 0) {

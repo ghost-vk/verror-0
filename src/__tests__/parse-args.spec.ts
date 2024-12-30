@@ -19,4 +19,10 @@ describe('parse args test', () => {
     assert.deepEqual(options, { cause: cause });
     assert.equal(shortmessage, 'error handle something {"metadata":{"port":5432}}');
   });
+
+  it('handles empty args', () => {
+    const { options, shortmessage } = parseArgs({ argv: [] });
+    assert.deepEqual(options, {});
+    assert.equal(shortmessage, '');
+  });
 });
