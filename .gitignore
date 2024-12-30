@@ -1,0 +1,15 @@
+/**/node_modules/
+yarn-error.log*
+
+# IDE, vim
+.DS_Store
+.vscode
+.idea
+*~
+*.swp
+*.swo
+
+# Environment variables must be defined at runtime.
+.env
+**/.env*
+!**/.env.example

@@ -1,0 +1,27 @@
+{
+  "jsc": {
+    "target": "es2022",
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": false,
+      "dynamicImport": true
+    },
+    "transform": {
+      "legacyDecorator": false,
+      "decoratorMetadata": false
+    },
+    "keepClassNames": true,
+    "loose": false,
+    "externalHelpers": false
+  },
+  "module": {
+    "type": "es6", 
+    "strict": true,
+    "lazy": false,
+    "noInterop": true
+  },
+  "sourceMaps": true,
+  "minify": false,
+  "exclude": ["node_modules", "dist"]
+}
