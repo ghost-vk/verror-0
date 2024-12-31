@@ -31,8 +31,16 @@ describe('verror test', () => {
   });
 
   it('saves root error as cause', () => {
-    const cause = new Error('database connection error');
-    const err = new VError(cause, 'error handle something');
-    assert.equal(err.message, 'error handle something: database connection error');
+    const suberr = new Error('root cause');
+    const err = new VError(suberr, 'error handle something');
+    assert.equal(err.message, 'error handle something: root cause');
+    assert.equal(VError.cause(err), suberr);
+  });
+
+  it('caused by another error, with annotation', () => {
+    const suberr = new Error('root cause');
+    const err = new VError(suberr, 'proximate cause: %d issues', 3);
+    assert.equal(err.message, 'proximate cause: 3 issues: root cause');
+    assert.equal(VError.cause(err), suberr);
   });
 });
