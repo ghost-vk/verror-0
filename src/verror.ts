@@ -196,3 +196,17 @@ export class WError extends VError {
     return str;
   }
 }
+
+/*
+ * SError is like VError, but stricter about types. You cannot pass "null" or
+ * "undefined" as string arguments to the formatter.
+ */
+export class SError extends VError {
+  constructor(...args: unknown[]) {
+    const parsed = parseArgs({
+      argv: args,
+      strict: true
+    });
+    super(parsed.options, '%s', parsed.shortmessage);
+  }
+}
