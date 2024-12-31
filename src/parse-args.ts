@@ -7,6 +7,9 @@ type Args = {
   // Второй - строка / sprintf параметр.
   // Следующие - sprintf параметры.
   argv: unknown[];
+  // Force strict interpretation of sprintf arguments, even
+  // if the options in "argv" don't say so.
+  strict?: boolean;
 };
 
 export function parseArgs(args: Args): { options: Options; shortmessage: string } {
@@ -50,6 +53,16 @@ export function parseArgs(args: Args): { options: Options; shortmessage: string 
   } else {
     // 1й - message, остальные - параметры.
     shortmessage = format(...sprintfArgs);
+  }
+
+  if (args.strict) {
+    options.strict = true;
+  }
+
+  if (options.strict) {
+    if (sprintfArgs.some((v) => v === null || v === undefined)) {
+      throw new Error('strict mode violation: one or more arguments in sprintf args are null or undefined');
+    }
   }
 
   return {

@@ -3,4 +3,5 @@ export type Options = {
   name?: string;
   skipCauseMessage?: boolean;
   info?: Record<string, unknown>;
+  strict?: boolean;
 };
