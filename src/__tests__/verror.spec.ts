@@ -18,4 +18,21 @@ describe('verror test', () => {
     const err = new VError('null as string => %s', null);
     assert.equal(err.message, 'null as string => null');
   });
+
+  it('throws when arg is null or undefined if strict mode', (_, done) => {
+    try {
+      const _ = new VError({ strict: true }, '%s', null);
+    } catch (err) {
+      assert.equal(err.message, 'strict mode violation: one or more arguments in sprintf args are null or undefined');
+      done();
+      return;
+    }
+    done('expected throw error when pass null as sprintf arg');
+  });
+
+  it('saves root error as cause', () => {
+    const cause = new Error('database connection error');
+    const err = new VError(cause, 'error handle something');
+    assert.equal(err.message, 'error handle something: database connection error');
+  });
 });
