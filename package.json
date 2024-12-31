@@ -1,5 +1,5 @@
 {
-  "name": "verror",
+  "name": "verror-2",
   "version": "1.0.0",
   "license": "MIT",
   "module": "dist/index.js",
@@ -9,7 +9,7 @@
     "build": "swc src -d dist --config-file .swcrc",
     "build:prd": "swc src -d dist --config-file .swcrc.build",
     "test-tsx": "node --import tsx --test ./src/**/*.spec.ts",
-    "test": "node --import @swc-node/register/esm-register --test ./src/**/*.spec.ts",
+    "test": "node --import @swc-node/register/esm-register --test src/**/*.spec.ts",
     "postinstall": "husky",
     "eslint": "eslint --fix .",
     "prettier": "prettier --write ."
