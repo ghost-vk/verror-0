@@ -2,7 +2,6 @@ import { isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
 
 export class VError extends Error {
-  public name = 'VError';
   public message: string;
 
   protected jse_shortmsg: string;
@@ -60,17 +59,17 @@ export class VError extends Error {
     return str;
   }
 
-  static cause(err: unknown) {
+  static cause(err: unknown): Error | null {
     if (!isError(err)) {
       throw new Error('err must be an Error');
     }
-    if (!('jse_cause' in err)) {
-      return null;
+    if ('jse_cause' in err) {
+      return isError(err.jse_cause) ? err.jse_cause : null;
     }
-    return isError(err.jse_cause) ? err.jse_cause : null;
+    return isError(err.cause) ? err.cause : null;
   }
 
-  static info(err: unknown) {
+  static info(err: unknown): Record<string, unknown> {
     if (!isError(err)) {
       throw new Error('err must be an Error');
     }
@@ -101,12 +100,8 @@ export class VError extends Error {
     }
 
     for (let cause: Error | null = err; cause !== null; cause = VError.cause(cause)) {
-      if (!isError(err)) {
-        continue;
-      }
-      if (cause.name == name) {
-        return cause;
-      }
+      if (!isError(err)) continue;
+      if (cause.name === name) return cause;
     }
 
     return null;
@@ -159,14 +154,17 @@ export class VError extends Error {
 }
 
 export class MultiError extends VError {
-  public name = 'MultiError';
   private ase_errors: Error[];
 
   constructor(errors: unknown[]) {
     if (errors.some((e) => !isError(e))) {
       throw new Error('errors must be an Error list');
     }
-    super({ cause: errors[0] }, 'first of %d error%s', errors.length, errors.length == 1 ? '' : 's');
+    let name = 'MultiError';
+    if (errors[0] && typeof errors[0] === 'object' && 'name' in errors[0]) {
+      name = errors[0].name as string;
+    }
+    super({ cause: errors[0], name }, 'first of %d error%s', errors.length, errors.length == 1 ? '' : 's');
     this.ase_errors = errors as unknown[] as Error[];
   }
 
@@ -176,14 +174,13 @@ export class MultiError extends VError {
 }
 
 export class WError extends VError {
-  public name = 'WError';
-
   constructor(...args: unknown[]) {
     const parsed = parseArgs({
       argv: args
     });
     const options = parsed.options;
     options.skipCauseMessage = true;
+    options.name = options.name ?? 'WError';
     super(options, '%s', parsed.shortmessage);
   }
 
@@ -207,6 +204,7 @@ export class SError extends VError {
       argv: args,
       strict: true
     });
+    parsed.options.name = parsed.options.name ?? 'SError';
     super(parsed.options, '%s', parsed.shortmessage);
   }
 }

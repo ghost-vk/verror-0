@@ -26,17 +26,6 @@ export default [
           "newlines-between": "never",
           alphabetize: { order: "asc", caseInsensitive: true },
           groups: ["builtin", "external", "internal", "parent", "sibling"],
-          // pathGroupsExcludedImportTypes: backImportTypes,
-          // pathGroups: [
-          //   { pattern: "react", group: "external", position: "before" },
-          //   // внутренние библиотеки после внешних
-          //   { pattern: "@mc-edu/**", group: "external", position: "after" },
-          //   // отделяет внутренние импорты от внешних
-          //   ...backImportTypes.map((backImportType) => ({
-          //     pattern: `${backImportType}/**/*`,
-          //     group: "internal",
-          //   })),
-          // ],
         },
       ],
     },

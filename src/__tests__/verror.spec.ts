@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
-import { VError } from '../verror.js';
 import assert from 'node:assert/strict';
+import { VError } from '../verror.js';
 
 describe('verror test', () => {
   it('create instance', () => {
