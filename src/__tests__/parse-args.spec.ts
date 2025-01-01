@@ -26,14 +26,10 @@ describe('parse args test', () => {
     assert.equal(shortmessage, '');
   });
 
-  it('gracefully handles error when passed undefined or null when strict mode', (_, done) => {
-    try {
-      parseArgs({ argv: ['%s', null], strict: true });
-    } catch (err) {
-      assert.equal(err.message, 'strict mode violation: one or more arguments in sprintf args are null or undefined');
-      done();
-      return;
-    }
-    done('expected throw error');
+  it('gracefully handles error when passed undefined or null when strict mode', () => {
+    assert.throws(
+      () => parseArgs({ argv: ['%s', null], strict: true }),
+      new Error('strict mode violation: one or more arguments in sprintf args are null or undefined')
+    );
   });
 });
