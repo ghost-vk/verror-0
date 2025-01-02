@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { VError } from '../verror.js';
+import { VError } from '../src/verror.js';
 
 describe('info test', () => {
   const err1 = new VError(

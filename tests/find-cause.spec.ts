@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { SError, VError, WError } from '../verror.js';
+import { SError, VError, WError } from '../src/verror.js';
 
 describe('find and has cause test', () => {
   // We'll build up a cause chain using each of our classes and make sure

@@ -8,8 +8,8 @@
   "scripts": {
     "build": "swc src -d dist --config-file .swcrc",
     "build:prd": "swc src -d dist --config-file .swcrc.build",
-    "test-tsx": "node --import tsx --test ./src/**/*.spec.ts",
-    "test": "node --import @swc-node/register/esm-register --test src/**/*.spec.ts",
+    "test-tsx": "node --import tsx --test tests/*.spec.ts",
+    "test": "node --import @swc-node/register/esm-register --test tests/*.spec.ts",
     "postinstall": "husky",
     "eslint": "eslint --fix .",
     "prettier": "prettier --write ."

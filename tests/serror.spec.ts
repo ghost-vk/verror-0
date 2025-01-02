@@ -1,5 +1,5 @@
 import { describe, it } from 'node:test';
-import { SError } from '../verror.js';
+import { SError } from '../src/verror.js';
 import assert from 'node:assert';
 
 describe('serror test', () => {

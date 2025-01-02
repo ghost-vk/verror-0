@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseArgs } from '../parse-args.js';
+import { parseArgs } from '../src/parse-args.js';
 
 describe('parse args test', () => {
   it('handles strings args', () => {
