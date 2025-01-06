@@ -21,9 +21,6 @@
     "strictNullChecks": true,
     "allowUnreachableCode": false
   },
-  "ts-node": {
-    "esm": true
-  },
   "include": ["src", "tests", "types/index.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
