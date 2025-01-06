@@ -63,20 +63,6 @@ export class VError extends Error {
     return str;
   }
 
-  static fullStack(err: unknown): string | undefined {
-    if (!isError(err)) {
-      throw new Error('err must be an Error');
-    }
-
-    const _cause = cause(err);
-
-    if (_cause) {
-      return err.stack + '\ncaused by: ' + VError.fullStack(_cause);
-    }
-
-    return err.stack;
-  }
-
   static errorFromList(errors: unknown[]) {
     if (errors.length === 0) {
       return null;
