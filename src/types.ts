@@ -5,3 +5,5 @@ export type Options = {
   info?: Record<string, unknown>;
   strict?: boolean;
 };
+
+export type Info = Record<string, unknown>;

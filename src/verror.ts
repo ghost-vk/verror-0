@@ -63,27 +63,6 @@ export class VError extends Error {
     return str;
   }
 
-  static info(err: unknown): Record<string, unknown> {
-    if (!isError(err)) {
-      throw new Error('err must be an Error');
-    }
-    const _cause = cause(err);
-    let rv: Record<string, unknown>;
-    if (_cause !== null) {
-      rv = VError.info(_cause);
-    } else {
-      rv = {};
-    }
-
-    if ('jse_info' in err && typeof err.jse_info == 'object' && err.jse_info !== null) {
-      for (const k in err.jse_info) {
-        rv[k] = err.jse_info[k];
-      }
-    }
-
-    return rv;
-  }
-
   static findCauseByName(err: unknown, name: string): Error | null {
     if (!isError(err)) {
       throw new Error('err must be an Error');
