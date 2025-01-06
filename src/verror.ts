@@ -1,3 +1,4 @@
+import { cause } from './cause.js';
 import { isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
 import { Options } from './types.js';
@@ -62,24 +63,14 @@ export class VError extends Error {
     return str;
   }
 
-  static cause(err: unknown): Error | null {
-    if (!isError(err)) {
-      throw new Error('err must be an Error');
-    }
-    if ('jse_cause' in err) {
-      return isError(err.jse_cause) ? err.jse_cause : null;
-    }
-    return isError(err.cause) ? err.cause : null;
-  }
-
   static info(err: unknown): Record<string, unknown> {
     if (!isError(err)) {
       throw new Error('err must be an Error');
     }
-    const cause = VError.cause(err);
+    const _cause = cause(err);
     let rv: Record<string, unknown>;
-    if (cause !== null) {
-      rv = VError.info(cause);
+    if (_cause !== null) {
+      rv = VError.info(_cause);
     } else {
       rv = {};
     }
@@ -102,9 +93,9 @@ export class VError extends Error {
       throw new Error('name cannot be empty');
     }
 
-    for (let cause: Error | null = err; cause !== null; cause = VError.cause(cause)) {
+    for (let _cause: Error | null = err; _cause !== null; _cause = cause(_cause)) {
       if (!isError(err)) continue;
-      if (cause.name === name) return cause;
+      if (_cause.name === name) return _cause;
     }
 
     return null;
@@ -119,10 +110,10 @@ export class VError extends Error {
       throw new Error('err must be an Error');
     }
 
-    const cause = VError.cause(err);
+    const _cause = cause(err);
 
-    if (cause) {
-      return err.stack + '\ncaused by: ' + VError.fullStack(cause);
+    if (_cause) {
+      return err.stack + '\ncaused by: ' + VError.fullStack(_cause);
     }
 
     return err.stack;

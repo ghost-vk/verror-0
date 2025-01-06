@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { VError } from '../src/verror.js';
+import { cause } from '../src/cause.js';
 
 describe('info test', () => {
   const err1 = new VError(
@@ -24,7 +25,7 @@ describe('info test', () => {
 
   it('should propagate info from nested errors', () => {
     const err2 = new VError(err1, 'worse');
-    assert.equal(VError.cause(err2), err1);
+    assert.equal(cause(err2), err1);
     assert.deepEqual(VError.info(err2), {
       errno: 'EDEADLK',
       anobject: { hello: 'world' }
@@ -41,7 +42,7 @@ describe('info test', () => {
       },
       'worse'
     );
-    assert.equal(VError.cause(err2), err1);
+    assert.equal(cause(err2), err1);
     assert.equal(err2.message, 'worse: bad');
     assert.deepEqual(VError.info(err2), {
       errno: 'EDEADLK',
@@ -70,7 +71,7 @@ describe('info test', () => {
       'what next'
     );
     assert.equal(err3.name, 'BigError');
-    assert.equal(VError.cause(err3), err2);
+    assert.equal(cause(err3), err2);
     assert.deepEqual(VError.info(err3), {
       errno: 'EDEADLK',
       anobject: { hello: 'moon' },

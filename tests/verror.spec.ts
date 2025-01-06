@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { VError } from '../src/verror.js';
+import { cause } from '../src/cause.js';
 
 describe('verror test', () => {
   it('create instance', () => {
@@ -34,13 +35,13 @@ describe('verror test', () => {
     const suberr = new Error('root cause');
     const err = new VError(suberr, 'error handle something');
     assert.equal(err.message, 'error handle something: root cause');
-    assert.equal(VError.cause(err), suberr);
+    assert.equal(cause(err), suberr);
   });
 
   it('caused by another error, with annotation', () => {
     const suberr = new Error('root cause');
     const err = new VError(suberr, 'proximate cause: %d issues', 3);
     assert.equal(err.message, 'proximate cause: 3 issues: root cause');
-    assert.equal(VError.cause(err), suberr);
+    assert.equal(cause(err), suberr);
   });
 });
