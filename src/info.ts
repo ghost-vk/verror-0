@@ -1,7 +1,7 @@
 import { cause } from './cause.js';
 import { isError } from './is-error.js';
 
-export function info(err: unknown): verror0.Info {
+export const info: typeof verror0.info = (err: unknown): verror0.Info => {
   if (!isError(err)) {
     throw new Error('err must be an Error');
   }
@@ -20,4 +20,4 @@ export function info(err: unknown): verror0.Info {
   }
 
   return rv;
-}
+};

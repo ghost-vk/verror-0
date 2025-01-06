@@ -32,7 +32,6 @@ The classes here are:
 First, install the package:
 
 ```
-// todo: actual name
 npm install verror0
 ```
 
