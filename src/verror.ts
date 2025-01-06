@@ -63,27 +63,6 @@ export class VError extends Error {
     return str;
   }
 
-  static findCauseByName(err: unknown, name: string): Error | null {
-    if (!isError(err)) {
-      throw new Error('err must be an Error');
-    }
-
-    if (name.length === 0) {
-      throw new Error('name cannot be empty');
-    }
-
-    for (let _cause: Error | null = err; _cause !== null; _cause = cause(_cause)) {
-      if (!isError(err)) continue;
-      if (_cause.name === name) return _cause;
-    }
-
-    return null;
-  }
-
-  static hasCauseWithName(err: unknown, name: string): boolean {
-    return VError.findCauseByName(err, name) !== null;
-  }
-
   static fullStack(err: unknown): string | undefined {
     if (!isError(err)) {
       throw new Error('err must be an Error');
