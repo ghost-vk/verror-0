@@ -63,22 +63,6 @@ export class VError extends Error {
     return str;
   }
 
-  static errorFromList(errors: unknown[]) {
-    if (errors.length === 0) {
-      return null;
-    }
-
-    if (errors.some((e) => !isError(e))) {
-      throw new Error('errors must be an Error list');
-    }
-
-    if (errors.length == 1) {
-      return errors[0];
-    }
-
-    return new MultiError(errors);
-  }
-
   static errorForEach(err: unknown, cb: (err: Error) => void) {
     if (!isError(err)) {
       throw new Error('err must be an Error');
