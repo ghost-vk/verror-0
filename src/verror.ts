@@ -1,6 +1,5 @@
 import { isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
-import { Options } from './types.js';
 
 export class VError extends Error {
   public message: string;
@@ -9,7 +8,7 @@ export class VError extends Error {
   protected jse_cause: Error;
   protected jse_info: Record<string, unknown>;
 
-  constructor(options: Options | Error, message: string, ...params: unknown[]);
+  constructor(options: verror0.Options | Error, message: string, ...params: unknown[]);
   constructor(message?: string, ...params: unknown[]);
   constructor(...args: unknown[]) {
     const parsed = parseArgs({ argv: args ?? [] });

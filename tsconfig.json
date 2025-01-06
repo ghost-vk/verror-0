@@ -7,7 +7,7 @@
     "moduleResolution": "Node16",
     "resolveJsonModule": true,
     "outDir": "dist",
-    "rootDirs": ["src"],
+    "rootDir": "src",
     "types": ["node"],
     "pretty": true,
     "declaration": true,
@@ -24,6 +24,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "types/index.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

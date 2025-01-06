@@ -1,8 +1,7 @@
 import { cause } from './cause.js';
 import { isError } from './is-error.js';
-import { Info } from './types.js';
 
-export function info(err: unknown): Info {
+export function info(err: unknown): verror0.Info {
   if (!isError(err)) {
     throw new Error('err must be an Error');
   }

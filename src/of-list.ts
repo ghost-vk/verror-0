@@ -1,7 +1,7 @@
 import { isError } from './is-error.js';
-import { MultiError } from './verror.js';
+import { MultiError } from './multi-error.js';
 
-export function ofList(errors: unknown[]): null | Error | MultiError {
+export const ofList: typeof verror0.ofList = (errors: unknown[]): null | Error | MultiError => {
   if (errors.length === 0) {
     return null;
   }
@@ -16,4 +16,4 @@ export function ofList(errors: unknown[]): null | Error | MultiError {
   }
 
   return new MultiError(errors);
-}
+};

@@ -1,7 +1,7 @@
 import { cause } from './cause.js';
 import { isError } from './is-error.js';
 
-export function stack(err: unknown): string | undefined {
+export const stack: typeof verror0.stack = (err: unknown): string => {
   if (!isError(err)) {
     throw new Error('err must be an Error');
   }
@@ -12,5 +12,5 @@ export function stack(err: unknown): string | undefined {
     return err.stack + '\ncaused by: ' + stack(c);
   }
 
-  return err.stack;
-}
+  return err.stack ?? '';
+};

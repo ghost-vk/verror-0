@@ -21,7 +21,7 @@
     "lazy": false,
     "noInterop": true
   },
-  "sourceMaps": true,
-  "minify": false,
+  "sourceMaps": false,
+  "minify": true,
   "exclude": ["node_modules", "dist", "src/__tests__"]
 }
