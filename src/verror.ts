@@ -1,5 +1,6 @@
 import { isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
+import { Options } from './types.js';
 
 export class VError extends Error {
   public message: string;
@@ -8,6 +9,8 @@ export class VError extends Error {
   protected jse_cause: Error;
   protected jse_info: Record<string, unknown>;
 
+  constructor(options: Options | Error, message: string, ...params: unknown[]);
+  constructor(message?: string, ...params: unknown[]);
   constructor(...args: unknown[]) {
     const parsed = parseArgs({ argv: args ?? [] });
 
@@ -164,7 +167,7 @@ export class MultiError extends VError {
     if (errors[0] && typeof errors[0] === 'object' && 'name' in errors[0]) {
       name = errors[0].name as string;
     }
-    super({ cause: errors[0], name }, 'first of %d error%s', errors.length, errors.length == 1 ? '' : 's');
+    super({ cause: errors[0], name } as Options, 'first of %d error%s', errors.length, errors.length == 1 ? '' : 's');
     this.ase_errors = errors as unknown[] as Error[];
   }
 
@@ -191,20 +194,5 @@ export class WError extends VError {
       str += '; caused by ' + this.jse_cause.toString();
     }
     return str;
-  }
-}
-
-/*
- * SError is like VError, but stricter about types. You cannot pass "null" or
- * "undefined" as string arguments to the formatter.
- */
-export class SError extends VError {
-  constructor(...args: unknown[]) {
-    const parsed = parseArgs({
-      argv: args,
-      strict: true
-    });
-    parsed.options.name = parsed.options.name ?? 'SError';
-    super(parsed.options, '%s', parsed.shortmessage);
   }
 }
