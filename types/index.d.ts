@@ -60,4 +60,5 @@ declare namespace verror0 {
   export function hasCause(err: unknown, name: string): boolean;
   export function ofList(errors: unknown[]): null | Error | verror0.MultiError;
   export function errorForEach(err: unknown, func: (err: Error) => void): void;
+  export function wrap(err: unknown): Error;
 }
