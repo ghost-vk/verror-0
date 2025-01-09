@@ -1,5 +1,52 @@
 # verror: rich JavaScript errors
 
+## Differences from the original verror
+
+**Switched from CommonJS to ESM**
+
+The library now uses ECMAScript Modules instead of CommonJS to leverage modern module features in Node.js.
+
+**`node:util.format` instead of `extsprintf`**
+
+Replaced the external `extsprintf` dependency with the built-in format method from `node:util`, reducing the number of external dependencies.
+
+**Use of Node.js standard library instead of external dependencies**
+
+External dependencies were removed in favor of functions provided by the Node.js standard library.
+
+**Using `node:test` runner**
+
+Tests are now implemented using the built-in node:test runner instead of external test frameworks.
+
+**Built-in TypeScript typings**
+
+Type definitions are included within the package, eliminating the need for separate type files or additional type installations.
+
+**Modern error inheritance**
+
+Instead of using the deprecated `util.inherit`, the library now uses standard class inheritance (class extends Error).
+
+**Renamed methods**
+
+- `hasCauseWithName` → `hasCause`
+- `findCauseByName` → `findCause`
+- `fullStack` → `stack`
+- `errorFromList` → `ofList`
+
+**Separate functions instead of static methods**
+
+Functions such as cause, info, stack, etc., are implemented as standalone functions rather than static methods of a class.
+
+**Added `wrap` function**
+
+The wrap function wraps an unknown value into an Error (or VError), making it easier to handle unknown types of errors in TypeScript.
+
+These changes make the library more modern and TypeScript-friendly, with fewer dependencies and an improved code structure.
+
+---
+
+## Overview
+
 This module provides several classes in support of Joyent's [Best Practices for
 Error Handling in Node.js](http://www.joyent.com/developers/node/design/errors).
 If you find any of the behavior here confusing or surprising, check out that
@@ -32,7 +79,7 @@ The classes here are:
 First, install the package:
 
 ```
-npm install verror0
+npm install verror-0
 ```
 
 If nothing else, you can use VError as a drop-in replacement for the built-in
