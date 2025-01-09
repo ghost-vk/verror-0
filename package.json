@@ -5,15 +5,15 @@
     "url": "git+https://github.com/ghost-vk/verror-0.git",
     "type": "git"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "type": "module",
-  "main": "./lib/cjs/lib.js",
-  "module": "./lib/esm/lib.js",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
     "compile": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json",
-    "build": "rm -rf lib && yarn compile",
+    "build": "rm -rf lib && yarn compile && node ./scripts/prepare-package-json",
     "test": "node --import @swc-node/register/esm-register --test tests/*.spec.ts",
     "prettier": "prettier --write ."
   },
@@ -27,9 +27,12 @@
   },
   "exports": {
     ".": {
-      "types": "./lib/types/index.d.ts",
+      "cjs": "./lib/cjs/index.js",
+      "esm": "./lib/esm/index.js",
+      "node": "./lib/esm/index.js",
       "require": "./lib/cjs/index.js",
       "import": "./lib/esm/index.js",
+      "types": "./lib/types/index.d.ts",
       "default": "./lib/esm/index.js"
     },
     "./package.json": "./package.json"
