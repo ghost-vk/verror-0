@@ -2,9 +2,9 @@
 
 ## Differences from the original verror
 
-**Switched from CommonJS to ESM**
+**Switched from CommonJS to ESM+CommonJS**
 
-The library now uses ECMAScript Modules instead of CommonJS to leverage modern module features in Node.js.
+The library now uses ECMAScript Modules or CommonJS instead of CommonJS to leverage modern module features in Node.js.
 
 **`node:util.format` instead of `extsprintf`**
 

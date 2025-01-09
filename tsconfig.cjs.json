@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "./lib/cjs",
-    "module": "commonjs"
+    "module": "commonjs",
   },
   "exclude": ["node_modules", "tests"],
 }

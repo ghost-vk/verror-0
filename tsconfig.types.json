@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "./lib/types",
+    "module": "commonjs",
     "declaration": true,
     "emitDeclarationOnly": true
   },

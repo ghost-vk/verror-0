@@ -12,11 +12,11 @@ const buildDir = './lib';
       let content = null;
       switch (dir) {
         case 'esm': {
-          content = '{"type":"module"}';
+          content = '{"type": "module"}';
           break;
         }
         case 'cjs': {
-          content = '{"type":"commonjs"}';
+          content = '{"type": "commonjs"}';
           break;
         }
       }
