@@ -18,4 +18,5 @@ logs/
 *.swp
 tests
 README.md~
+lib/tsconfig*
 !lib/
