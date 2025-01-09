@@ -1,6 +1,21 @@
 import { isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
+import { Options } from './types.js';
 
+/*
+ * VError([cause], fmt[, arg...]): Like JavaScript's built-in Error class, but
+ * supports a "cause" argument (another error) and a printf-style message.  The
+ * cause argument can be null or omitted entirely.
+ *
+ * Examples:
+ *
+ * CODE                                    MESSAGE
+ * new VError('something bad happened')    "something bad happened"
+ * new VError('missing file: "%s"', file)  "missing file: "/etc/passwd"
+ *   with file = '/etc/passwd'
+ * new VError(err, 'open failed')          "open failed: file not found"
+ *   with err.message = 'file not found'
+ */
 export class VError extends Error {
   public message: string;
 
@@ -8,7 +23,7 @@ export class VError extends Error {
   protected jse_cause: Error;
   protected jse_info: Record<string, unknown>;
 
-  constructor(options: verror0.Options | Error, message: string, ...params: unknown[]);
+  constructor(options: Options | Error, message: string, ...params: unknown[]);
   constructor(message?: string, ...params: unknown[]);
   constructor(...args: unknown[]) {
     const parsed = parseArgs({ argv: args ?? [] });

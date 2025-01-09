@@ -15,4 +15,5 @@ yarn-error.log*
 !**/.env.example
 
 dist
+lib
 yarn.lock

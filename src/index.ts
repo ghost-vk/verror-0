@@ -7,3 +7,4 @@ export { stack } from './stack.js';
 export { ofList } from './of-list.js';
 export { errorForEach } from './error-for-each.js';
 export { wrap } from './wrap.js';
+export { Info, Options } from './types.js';

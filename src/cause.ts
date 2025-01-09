@@ -1,6 +1,6 @@
 import { isError } from './is-error.js';
 
-export const cause: typeof verror0.cause = (err: unknown): Error | null => {
+export const cause = (err: unknown): Error | null => {
   if (!isError(err)) {
     throw new Error('err must be an Error');
   }
@@ -17,7 +17,7 @@ export const cause: typeof verror0.cause = (err: unknown): Error | null => {
  * // returns PayloadTooLargeException from stack
  * findCause(err, 'PayloadTooLargeException')
  */
-export const findCause: typeof verror0.findCause = (err: unknown, name: string): Error | null => {
+export const findCause = (err: unknown, name: string): Error | null => {
   if (!isError(err)) {
     throw new Error('err must be an Error');
   }
@@ -34,6 +34,6 @@ export const findCause: typeof verror0.findCause = (err: unknown, name: string):
   return null;
 };
 
-export const hasCause: typeof verror0.hasCause = (err: unknown, name: string): boolean => {
+export const hasCause = (err: unknown, name: string): boolean => {
   return findCause(err, name) !== null;
 };

@@ -1,7 +1,7 @@
 import { isError } from './is-error.js';
 import { MultiError } from './multi-error.js';
 
-export const errorForEach: typeof verror0.errorForEach = (err: unknown, cb: (err: Error) => void) => {
+export const errorForEach = (err: unknown, cb: (err: Error) => void) => {
   if (!isError(err)) {
     throw new Error('err must be an Error');
   }
