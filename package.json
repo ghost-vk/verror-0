@@ -1,5 +1,10 @@
 {
-  "name": "verror0",
+  "name": "verror-0",
+  "description": "VError without dependencies on top of nodejs standart library",
+  "repository": {
+    "url": "git+https://github.com/ghost-vk/verror-0.git",
+    "type": "git"
+  },
   "version": "1.0.0",
   "license": "MIT",
   "module": "dist/src/index.js",
