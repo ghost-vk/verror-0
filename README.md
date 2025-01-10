@@ -26,22 +26,33 @@ Type definitions are included within the package, eliminating the need for separ
 
 Instead of using the deprecated `util.inherit`, the library now uses standard class inheritance (class extends Error).
 
-**Renamed methods**
+**Update methods**
 
-- `hasCauseWithName` → `hasCause`
-- `findCauseByName` → `findCause`
-- `fullStack` → `stack`
-- `errorFromList` → `ofList`
-
-**Separate functions instead of static methods**
-
-Functions such as cause, info, stack, etc., are implemented as standalone functions rather than static methods of a class.
+- Added link to function `hasCause` from static method `hasCauseWithName`.
+- Added link to function `findCause` from static method `findCauseByName`.
+- Added link to function `cause` from static method `cause`.
+- Added link to function `info` from static method `info`.
+- Added link to function `stack` from static method `fullStack`.
+- Moved static method `errorFromList` to function `fromList`.
+- Moved static method `errorForEach` to function `errorForEach`.
 
 **Added `wrap` function**
 
 The wrap function wraps an unknown value into an Error (or VError), making it easier to handle unknown types of errors in TypeScript.
 
 These changes make the library more modern and TypeScript-friendly, with fewer dependencies and an improved code structure.
+
+```ts
+async function handleSomething() {
+  try {
+    // It throws an error.
+    await query();
+  } catch (err) {
+    // TypeScript doesn't complain that the error is unknown type.
+    throw new VError(wrap(err), 'error handle something');
+  }
+}
+```
 
 ---
 
@@ -377,7 +388,7 @@ Returns true if and only if `findCause(err, name)` would return
 a non-null value. This essentially determines whether `err` has any cause in
 its cause chain that has name `name`.
 
-### `ofList(errors)`
+### `fromList(errors)`
 
 Given an array of Error objects (possibly empty), return a single error
 representing the whole collection of errors. If the list has:
@@ -389,7 +400,7 @@ representing the whole collection of errors. If the list has:
 This is useful for cases where an operation may produce any number of errors,
 and you ultimately want to implement the usual `callback(err)` pattern. You can
 accumulate the errors in an array and then invoke
-`callback(ofList(errors))` when the operation is complete.
+`callback(fromList(errors))` when the operation is complete.
 
 ### `errorForEach(err, func)`
 
@@ -560,7 +571,7 @@ const err = new MultiError([
 console.error(err.message);
 ```
 
-See the convenience function `ofList`, which is sometimes simpler
+See the convenience function `fromList`, which is sometimes simpler
 to use than this constructor.
 
 ## Public methods

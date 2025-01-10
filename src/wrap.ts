@@ -1,5 +1,4 @@
-import { VError } from './verror.js';
-import { ofList } from './of-list.js';
+import { fromList } from './from-list.js';
 
 /**
  * Wraps `unknown` to `Error`. Handles nested errors (`AggregateError` case).
@@ -27,9 +26,9 @@ export function wrap(err: unknown): Error {
   const hasErrorsProperty = 'errors' in err && Array.isArray((err as any).errors);
   const errorsNotEmpty = hasErrorsProperty && (err as any).errors.length > 0;
   if (errorsNotEmpty) {
-    const multiError = ofList((err as any).errors);
+    const multiError = fromList((err as any).errors);
     if (!multiError) {
-      return new VError('unknown');
+      return new Error('unknown');
     }
     return multiError;
   }

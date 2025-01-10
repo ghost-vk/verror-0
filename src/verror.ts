@@ -2,6 +2,9 @@ import { format } from 'node:util';
 import { hasErrors, isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
 import { Options } from './types.js';
+import { cause, findCause, hasCause } from './cause.js';
+import { info } from './info.js';
+import { stack } from './stack.js';
 
 /*
  * VError([cause], fmt[, arg...]): Like JavaScript's built-in Error class, but
@@ -39,14 +42,14 @@ export class VError extends Error {
 
     this.name = parsed.options.name ?? 'VError';
 
-    // Для отладки мы отслеживаем исходное короткое сообщение (прикрепленное
-    // в частности, к этой ошибке) отдельно от полного сообщения (которое
-    // включает сообщения нашей цепочки причин).
+    // For debugging, we keep track of the original short message (attached
+    // this Error particularly) separately from the complete message (which
+    // includes the messages of our cause chain).
     this.jse_shortmsg = parsed.shortmessage;
     this.message = parsed.shortmessage;
 
-    // Если указана причина, запишем ссылку на нее и
-    // обновим наше сообщение соответствующим образом.
+    // If we've been given a cause, record a reference to it and update our
+    // message appropriately.
     const cause = parsed.options.cause;
     if (cause) {
       if (!isError(cause)) {
@@ -68,10 +71,10 @@ export class VError extends Error {
       }
     }
 
-    // Если нам дали объект со свойствами, сделаем его поверхностное копирование здесь.
-    // Мы не хотим использовать глубокое копирование в случае, если здесь есть не простые
-    // объекты, но мы не хотим использовать исходный объект в случае, если
-    // вызывающий изменит его позже.
+    // If we've been given an object with properties, shallow-copy that
+    // here.  We don't want to use a deep copy in case there are non-plain
+    // objects here, but we don't want to use the original object in case
+    // the caller modifies it later.
     this.jse_info = {};
     if (parsed.options.info) {
       for (const k in parsed.options.info) {
@@ -85,4 +88,46 @@ export class VError extends Error {
     if (this.message) str += ': ' + this.message;
     return str;
   }
+
+  // Static methods
+  //
+  // These class-level methods are provided so that callers can use them on
+  // instances of Errors that are not VErrors.  New interfaces should be provided
+  // only using static methods to eliminate the class of programming mistake where
+  // people fail to check whether the Error object has the corresponding methods.
+
+  /**
+   * Link to {@link cause}. For compatibility with original verror.
+   */
+  static cause = cause;
+
+  /**
+   * Link to {@link info}. For compatibility with original verror.
+   */
+  static info = info;
+
+  /**
+   * Finds cause in stack by error name.
+   * Link to {@link findCause}. For compatibility with original verror.
+   *
+   * @example
+   * // returns PayloadTooLargeException from stack if exists
+   * VError.findCauseByName(err, 'PayloadTooLargeException')
+   */
+  static findCauseByName = findCause;
+
+  /**
+   * Check if cause exists in stack by error name.
+   * Link to {@link hasCause}. For compatibility with original verror.
+   *
+   * @example
+   * // returns true if PayloadTooLargeException in stack
+   * VError.hasCauseWithName(err, 'PayloadTooLargeException')
+   */
+  static hasCauseWithName = hasCause;
+
+  /**
+   * Link to {@link stack}. For compatibility with original verror.
+   */
+  static fullStack = stack;
 }

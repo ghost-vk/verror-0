@@ -1,7 +1,7 @@
 import { isError } from './is-error.js';
 import { MultiError } from './multi-error.js';
 
-export const ofList = (errors: unknown[]): null | Error | MultiError => {
+export const fromList = (errors: unknown[]): null | Error | MultiError => {
   if (errors.length === 0) {
     return null;
   }
