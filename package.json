@@ -31,5 +31,14 @@
       "default": "./lib/esm/index.js"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "keywords": [
+		"error",
+		"errors",
+		"err",
+		"exception",
+		"exceptions",
+		"custom",
+    "verror"
+	]
 }
