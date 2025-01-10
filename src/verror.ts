@@ -1,4 +1,5 @@
-import { isError } from './is-error.js';
+import { format } from 'node:util';
+import { hasErrors, isError } from './is-error.js';
 import { parseArgs } from './parse-args.js';
 import { Options } from './types.js';
 
@@ -35,6 +36,7 @@ export class VError extends Error {
     }
 
     super(parsed.shortmessage);
+
     this.name = parsed.options.name ?? 'VError';
 
     // Для отладки мы отслеживаем исходное короткое сообщение (прикрепленное
@@ -51,10 +53,18 @@ export class VError extends Error {
         throw new Error('cause is not an Error');
       }
 
+      const isAggregate = hasErrors(cause);
+
       this.jse_cause = cause;
 
       if (!parsed.options.skipCauseMessage) {
-        this.message += ': ' + cause.message;
+        if (isAggregate) {
+          this.name = parsed.options.name ?? (cause.errors[0].name as string) ?? 'VError';
+          this.message += format(': first of %d error%s', cause.errors.length, cause.errors.length === 1 ? '' : 's');
+          this.message += ': ' + cause.errors[0].message;
+        } else {
+          this.message += ': ' + cause.message;
+        }
       }
     }
 

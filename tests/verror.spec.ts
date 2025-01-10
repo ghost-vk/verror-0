@@ -44,4 +44,11 @@ describe('verror test', () => {
     assert.equal(err.message, 'proximate cause: 3 issues: root cause');
     assert.equal(cause(err), suberr);
   });
+
+  it('handles aggregate error', () => {
+    const suberr = new AggregateError([new Error('first one'), new Error('second one')]);
+    const err = new VError(suberr, 'app error');
+    assert.equal(err.message, 'app error: first of 2 errors: first one');
+    assert.equal(cause(err), suberr);
+  });
 });
