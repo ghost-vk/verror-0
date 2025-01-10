@@ -5,7 +5,7 @@
     "url": "git+https://github.com/ghost-vk/verror-0.git",
     "type": "git"
   },
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "type": "module",
   "main": "./lib/cjs/index.js",
