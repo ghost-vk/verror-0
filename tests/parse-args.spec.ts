@@ -8,7 +8,7 @@ describe('parse args test', () => {
       argv: ['database connection error on port %d', 5432]
     });
     assert.equal(shortmessage, 'database connection error on port 5432');
-    assert.deepEqual(options, {});
+    assert.deepEqual(options, defaultArgs());
   });
 
   it('handles error cause', () => {
@@ -16,13 +16,13 @@ describe('parse args test', () => {
     const { options, shortmessage } = parseArgs({
       argv: [cause, 'error handle something %j', { metadata: { port: 5432 } }]
     });
-    assert.deepEqual(options, { cause: cause });
+    assert.deepEqual(options, { cause: cause, ...defaultArgs() });
     assert.equal(shortmessage, 'error handle something {"metadata":{"port":5432}}');
   });
 
   it('handles empty args', () => {
     const { options, shortmessage } = parseArgs({ argv: [] });
-    assert.deepEqual(options, {});
+    assert.deepEqual(options, defaultArgs());
     assert.equal(shortmessage, '');
   });
 
@@ -32,4 +32,8 @@ describe('parse args test', () => {
       new Error('strict mode violation: one or more arguments in sprintf args are null or undefined')
     );
   });
+
+  function defaultArgs() {
+    return { maxCauseDepth: 3 };
+  }
 });

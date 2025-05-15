@@ -6,4 +6,9 @@ export type Options = {
   skipCauseMessage?: boolean;
   info?: Info;
   strict?: boolean;
+  /**
+   * Maximum number of nested `cause` errors to traverse when building the final error message.
+   * Default: 3.
+   */
+  maxCauseDepth?: number;
 };

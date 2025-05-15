@@ -67,6 +67,18 @@ export class VError extends Error {
           this.message += ': ' + cause.errors[0].message;
         } else {
           this.message += ': ' + cause.message;
+
+          let depth = 1;
+          let subcause = cause.cause;
+          while (subcause && depth < (parsed.options.maxCauseDepth ?? 3)) {
+            if (isError(subcause)) {
+              this.message += ': ' + subcause.message;
+              subcause = subcause.cause;
+              depth++;
+            } else {
+              break;
+            }
+          }
         }
       }
     }

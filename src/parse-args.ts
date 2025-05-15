@@ -65,6 +65,11 @@ export function parseArgs(args: Args): { options: Options; shortmessage: string 
     }
   }
 
+  if ('maxCauseDepth' in options && (typeof options.maxCauseDepth !== 'number' || options.maxCauseDepth <= 0)) {
+    throw new Error('maxCauseDepth must be a positive number');
+  }
+  options.maxCauseDepth = options.maxCauseDepth ?? 3;
+
   return {
     options,
     shortmessage
