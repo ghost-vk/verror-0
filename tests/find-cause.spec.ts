@@ -84,6 +84,34 @@ describe('find and has cause test', () => {
     assert.equal(unnamedErr, findCause(unnamedErr, 'Error'));
   });
 
+  it('should work with Set<string> as name', () => {
+    assert.equal(findCause(err4, new Set(['ErrorFour', 'Other'])), err4);
+    assert.equal(hasCause(err4, new Set(['ErrorFour', 'Other'])), true);
+    assert.equal(findCause(err4, new Set(['ErrorThree'])), err3);
+    assert.equal(hasCause(err4, new Set(['ErrorThree'])), true);
+    assert.equal(findCause(err4, new Set(['ErrorTwo'])), err2);
+    assert.equal(hasCause(err4, new Set(['ErrorTwo'])), true);
+    assert.equal(findCause(err4, new Set(['MyError'])), err1);
+    assert.equal(hasCause(err4, new Set(['MyError'])), true);
+
+    assert.equal(findCause(err4, new Set(['Nonexistent'])), null);
+    assert.equal(hasCause(err4, new Set(['Nonexistent'])), false);
+  });
+
+  it('should work with string[] as name', () => {
+    assert.equal(findCause(err4, ['ErrorFour', 'Other']), err4);
+    assert.equal(hasCause(err4, ['ErrorFour', 'Other']), true);
+    assert.equal(findCause(err4, ['ErrorThree']), err3);
+    assert.equal(hasCause(err4, ['ErrorThree']), true);
+    assert.equal(findCause(err4, ['ErrorTwo']), err2);
+    assert.equal(hasCause(err4, ['ErrorTwo']), true);
+    assert.equal(findCause(err4, ['MyError']), err1);
+    assert.equal(hasCause(err4, ['MyError']), true);
+
+    assert.equal(findCause(err4, ['Nonexistent']), null);
+    assert.equal(hasCause(err4, ['Nonexistent']), false);
+  });
+
   it('should throw an Error when given bad argument types', () => {
     assert.throws(() => {
       findCause(null, 'AnError');

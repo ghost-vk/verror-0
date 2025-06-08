@@ -123,8 +123,16 @@ export class VError extends Error {
    * Link to {@link findCause}. For compatibility with original verror.
    *
    * @example
-   * // returns PayloadTooLargeException from stack if exists
-   * VError.findCauseByName(err, 'PayloadTooLargeException')
+   * // Single string
+   * VError.findCauseByName(err, 'PayloadTooLargeException');
+   *
+   * @example
+   * // Array of names
+   * VError.findCauseByName(err, ['PayloadTooLargeException', 'OtherError']);
+   *
+   * @example
+   * // Set of names
+   * VError.findCauseByName(err, new Set(['PayloadTooLargeException', 'OtherError']));
    */
   static findCauseByName = findCause;
 
@@ -133,8 +141,16 @@ export class VError extends Error {
    * Link to {@link hasCause}. For compatibility with original verror.
    *
    * @example
-   * // returns true if PayloadTooLargeException in stack
-   * VError.hasCauseWithName(err, 'PayloadTooLargeException')
+   * // Single string
+   * VError.hasCauseWithName(err, 'PayloadTooLargeException');
+   *
+   * @example
+   * // Array of names
+   * VError.hasCauseWithName(err, ['PayloadTooLargeException', 'OtherError']);
+   *
+   * @example
+   * // Set of names
+   * VError.hasCauseWithName(err, new Set(['PayloadTooLargeException', 'OtherError']));
    */
   static hasCauseWithName = hasCause;
 
